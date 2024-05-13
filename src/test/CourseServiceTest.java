@@ -18,21 +18,24 @@ class CourseServiceTest {
     }
 
     @Test
+    void getCourse() {
+        // Test that course code is recognised as correct - changing code to anything else will throw an error
+        assertNotNull(courseService.getCourse( "INTRO-CS-1"));
+        // Test that course code is recognised as incorrect - changing code to "INTRO-CS-1" will throw an error
+        assertNull(courseService.getCourse( "INTRO-CS"));
+    }
+
+    @Test
     void registerCourse() {
+        // To register a new course
         Course course = new Course("TEST-COURSE", "Test Course", 8, new Module("TEST-MODULE", "Test Module", "Test Module Description") );
 
         courseService.registerCourse(course);
 
-        // Test that course was registered successfully
+        // Test that new course was registered successfully and equal to the new course created - changing code to anything else will throw an error
         assertNotNull(courseService.getCourse("TEST-COURSE"));
         assertEquals(course, courseService.getCourse("TEST-COURSE"));
     }
 
-    @Test
-    void getCourse() {
-        // Test that course code is recognised as correct
-        assertNotNull(courseService.getCourse( "INTRO-CS-1"));
-        // Test that course code is recognised as incorrect
-        assertNull(courseService.getCourse( "INTRO-CS"));
-    }
+
 }

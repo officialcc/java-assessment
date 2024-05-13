@@ -13,6 +13,7 @@ class StudentServiceTest {
 
     StudentService studentService;
 
+    // To create a new student
     Student student = new Student("0001", "Colin", "some@email.com", new Date(02/07/1977));
 
     @BeforeEach
@@ -21,21 +22,25 @@ class StudentServiceTest {
     }
 
     @Test
-    void subscribeStudent() {
-        studentService.subscribeStudent(student);
-
-        assertTrue(studentService.isSubscribed("0001"));
-    }
-
-    @Test
     void isSubscribed() {
         studentService.subscribeStudent(student);
 
+        // Test that studentID "0001" isSubscribed is true - changing studentId to anything else will throw an error
         assertTrue(studentService.isSubscribed("0001"));
+
+        // Test that studentID "0002" isSubscribed is false - changing studentId to "0001" will throw an error
+        assertFalse(studentService.isSubscribed("0002"));
     }
 
     @Test
-    void isSubscribedNotEquals() {
-        assertFalse(studentService.isSubscribed("0002"));
+    void findStudent() {
+        studentService.subscribeStudent(student);
+
+        // Test that studentId "0001" will be found - changing studentId to anything else throws an error
+        Student foundStudent = studentService.findStudent("0001");
+        assertNotNull(foundStudent);
+
+        // Test that Student name matches foundStudent studentId - changing name to anything else throws an error
+        assertEquals("Colin", foundStudent.getName());
     }
 }
